@@ -1,13 +1,15 @@
 from warcio.archiveiterator import ArchiveIterator
 import re
+import os
 import requests
 import sys
+
 
 class crwl:
     def __init__(self):
         self.url = []
         self.base_url = "http://commoncrawl.s3.amazonaws.com/"
-        self.filenm = "/Users/sayali/Documents/Python/commoncrwl/warc.paths"
+        self.filenm = os.path.join(os.path.dirname(os.path.basename(__file__)),"warc.paths")
         self.result = []
 
     def read_urls(self):
@@ -30,11 +32,7 @@ class crwl:
 
 
         entries = 0
-        matching_entries = 0
         hits = 0
-
-        # file_name = "http://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2019-30/segments/1563195523840.34/warc/CC-MAIN-20190715175205-20190715200159-00000.warc.gz"
-        #file_name_list = "http://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2020-24/warc.paths.gz"
 
         if len(sys.argv) > 1:
             file_name = sys.argv[1]
@@ -46,7 +44,7 @@ class crwl:
             stream = requests.get(file_name, stream=True).raw
         else:
             stream = open(file_name, "rb")
-        print("got stream")
+
         for record in ArchiveIterator(stream):
             if record.rec_type == "warcinfo":
                 continue
@@ -72,6 +70,7 @@ class crwl:
                 if len(self.result)> 1000:
                     break
 
-c = crwl()
-c.read_urls()
-print(c.result)
+if __name__ == "__main__":
+    c = crwl()
+    c.read_urls()
+    print(c.result)
