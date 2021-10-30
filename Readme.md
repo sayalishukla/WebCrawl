@@ -3,7 +3,7 @@
  
 
 ## Design
-- Take list URL form File for Feb 2020
+- Take list URL form File for May 2020
 - If contents in url have keywords 
     - covid19 or covid-19 coronavirus or Covid19 or Covid-19 or Coronavirus or COVID19
 - Then search for keywords
